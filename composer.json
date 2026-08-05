@@ -1,0 +1,20 @@
+{
+    "name": "seu-usuario/cardapio-digital",
+    "description": "Cardapio Digital Inteligente - projeto de estudo em PHP 8.3+ com POO, Clean Architecture, SOLID e Design Patterns.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
