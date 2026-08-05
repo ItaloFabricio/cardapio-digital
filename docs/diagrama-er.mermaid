@@ -1,0 +1,54 @@
+erDiagram
+    CATEGORIA ||--o{ PRODUTO : contem
+    CLIENTE ||--o{ PEDIDO : realiza
+    PEDIDO ||--o{ ITEM_PEDIDO : possui
+    PRODUTO ||--o{ ITEM_PEDIDO : referenciado_em
+    CUPOM ||--o{ PEDIDO : aplicado_em
+
+    CATEGORIA {
+        int id PK
+        string nome
+        int ordem
+    }
+
+    PRODUTO {
+        int id PK
+        int categoria_id FK
+        string nome
+        string descricao
+        decimal preco
+        boolean disponivel
+    }
+
+    CLIENTE {
+        int id PK
+        string nome
+        string email UK
+        string senha_hash
+        datetime criado_em
+    }
+
+    CUPOM {
+        int id PK
+        string codigo UK
+        string tipo_desconto
+        decimal valor
+        date validade
+        decimal valor_minimo_pedido
+    }
+
+    PEDIDO {
+        int id PK
+        int cliente_id FK
+        int cupom_id FK
+        string status
+        datetime criado_em
+    }
+
+    ITEM_PEDIDO {
+        int id PK
+        int pedido_id FK
+        int produto_id FK
+        int quantidade
+        decimal preco_unitario
+    }
