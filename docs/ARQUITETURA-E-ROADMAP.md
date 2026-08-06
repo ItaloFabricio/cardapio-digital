@@ -153,7 +153,6 @@ Note que **não** vou usar Singleton em nenhum ponto do domínio — o único ca
 - Composer, PSR-4, `.gitignore`, estrutura de pastas, README inicial, conexão PDO isolada em `ConnectionFactory`.
 - Conceitos: Autoloading, Namespaces, PSR-4, PSR-12.
 - Commit: `chore: estrutura inicial do projeto com Composer e PSR-4`
-- Post LinkedIn: "Comecei um novo projeto de portfólio: Cardápio Digital com PHP puro + Clean Architecture. Semana 1: fundação."
 
 ### Fase 1 — Domínio: Entidades e Value Objects
 - `Produto`, `Cliente`, `Cupom` como entidades ricas (não anemic model).
@@ -188,8 +187,6 @@ Note que **não** vou usar Singleton em nenhum ponto do domínio — o único ca
 
 ### Fase 9 (opcional/avançada) — Testes automatizados
 - PHPUnit, testes unitários de Service e Strategy com mocks de Repository.
-
-Cada fase, quando chegarmos nela, eu te entrego: código comentado com explicação de POO/SOLID/pattern, sugestão de nome de commit, descrição do commit, texto para LinkedIn e sugestão de imagem/diagrama.
 
 ---
 
