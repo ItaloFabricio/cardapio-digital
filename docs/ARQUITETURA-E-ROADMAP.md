@@ -1,18 +1,11 @@
 # Cardápio Digital Inteligente — Documento de Arquitetura e Roadmap
 
 > Projeto de estudo de PHP 8.3+ com POO, Clean Architecture, SOLID e Design Patterns.
-> Objetivo: peça de portfólio + série de posts técnicos no LinkedIn.
+> Objetivo: Colocar em prática os estudos de POO, Banco de dados, padrões de projeto e arquitetura limpa. Além disso, revisar sobre modelagem de dados com uma documentação informativa sobre requisitos e casos de uso. Assim, o intuito do projeto foi aplicar o que foi estudado e adquirir novos conhecimentos.
 
 ---
 
 ## 1. Por que este domínio (e não um blog)
-
-| Critério | Blog/CMS | Cardápio Digital |
-|---|---|---|
-| Saturação no GitHub | Muito alta | Baixa/Média |
-| Regras de negócio reais | Poucas (CRUD + comentário) | Muitas (estado do pedido, cupom, horário, estoque) |
-| Justifica Design Patterns naturalmente | Parcialmente | Sim, de forma orgânica |
-| Potencial de "features novas" a cada post | Médio | Alto (pagamento, notificação, relatórios, delivery) |
 
 O domínio de pedidos é rico o suficiente para você justificar **State**, **Strategy**, **Specification**, **Observer** e **Factory** sem forçar a barra — cada um resolve um problema concreto do negócio.
 
@@ -209,7 +202,3 @@ Cada fase, quando chegarmos nela, eu te entrego: código comentado com explicaç
 - [ ] Mensagens de erro genéricas para o usuário, log detalhado internamente
 
 ---
-
-## 9. Próximo passo
-
-Sugiro começarmos pela **Fase 0**. Antes de gerar código, preciso confirmar 3 decisões suas.
