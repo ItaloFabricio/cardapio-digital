@@ -1,18 +1,11 @@
 # Cardápio Digital Inteligente — Documento de Arquitetura e Roadmap
 
 > Projeto de estudo de PHP 8.3+ com POO, Clean Architecture, SOLID e Design Patterns.
-> Objetivo: peça de portfólio + série de posts técnicos no LinkedIn.
+> Objetivo: Colocar em prática os estudos de POO, Banco de dados, padrões de projeto e arquitetura limpa. Além disso, revisar sobre modelagem de dados com uma documentação informativa sobre requisitos e casos de uso. Assim, o intuito do projeto foi aplicar o que foi estudado e adquirir novos conhecimentos.
 
 ---
 
 ## 1. Por que este domínio (e não um blog)
-
-| Critério | Blog/CMS | Cardápio Digital |
-|---|---|---|
-| Saturação no GitHub | Muito alta | Baixa/Média |
-| Regras de negócio reais | Poucas (CRUD + comentário) | Muitas (estado do pedido, cupom, horário, estoque) |
-| Justifica Design Patterns naturalmente | Parcialmente | Sim, de forma orgânica |
-| Potencial de "features novas" a cada post | Médio | Alto (pagamento, notificação, relatórios, delivery) |
 
 O domínio de pedidos é rico o suficiente para você justificar **State**, **Strategy**, **Specification**, **Observer** e **Factory** sem forçar a barra — cada um resolve um problema concreto do negócio.
 
@@ -160,7 +153,6 @@ Note que **não** vou usar Singleton em nenhum ponto do domínio — o único ca
 - Composer, PSR-4, `.gitignore`, estrutura de pastas, README inicial, conexão PDO isolada em `ConnectionFactory`.
 - Conceitos: Autoloading, Namespaces, PSR-4, PSR-12.
 - Commit: `chore: estrutura inicial do projeto com Composer e PSR-4`
-- Post LinkedIn: "Comecei um novo projeto de portfólio: Cardápio Digital com PHP puro + Clean Architecture. Semana 1: fundação."
 
 ### Fase 1 — Domínio: Entidades e Value Objects
 - `Produto`, `Cliente`, `Cupom` como entidades ricas (não anemic model).
@@ -196,8 +188,6 @@ Note que **não** vou usar Singleton em nenhum ponto do domínio — o único ca
 ### Fase 9 (opcional/avançada) — Testes automatizados
 - PHPUnit, testes unitários de Service e Strategy com mocks de Repository.
 
-Cada fase, quando chegarmos nela, eu te entrego: código comentado com explicação de POO/SOLID/pattern, sugestão de nome de commit, descrição do commit, texto para LinkedIn e sugestão de imagem/diagrama.
-
 ---
 
 ## 8. Checklist de Segurança (aplicado desde a Fase 2)
@@ -209,7 +199,3 @@ Cada fase, quando chegarmos nela, eu te entrego: código comentado com explicaç
 - [ ] Mensagens de erro genéricas para o usuário, log detalhado internamente
 
 ---
-
-## 9. Próximo passo
-
-Sugiro começarmos pela **Fase 0**. Antes de gerar código, preciso confirmar 3 decisões suas.
