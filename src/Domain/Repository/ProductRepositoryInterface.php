@@ -10,7 +10,7 @@ interface ProductRepositoryInterface
 {
     public function save(Product $product): void;
 
-    public function findById(int $id): void;
+    public function findById(int $id): ?Product;
     
     /**
      * @return list<Product>
