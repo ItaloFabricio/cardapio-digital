@@ -31,7 +31,10 @@ o processo de decisão — não apenas o resultado final.
 
 ## 🧭 Status atual
 
-**Fase 0 — Fundação** ✅ concluída · **Fase 1 — Entidades e Value Objects** ✅ concluída · **Fase 2 — Banco de Dados e Repository Pattern** ✅ concluída · **Fase 3 — Application Layer** 🚧 em andamento
+**Fase 0 — Fundação** ✅ concluída · 
+**Fase 1 — Entidades e Value Objects** ✅ concluída · 
+**Fase 2 — Banco de Dados e Repository Pattern** ✅ concluída · 
+**Fase 3 — Application Layer** 🚧 em andamento
 
 ## 📝 Diário de desenvolvimento
 
