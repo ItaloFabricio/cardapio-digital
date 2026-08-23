@@ -31,7 +31,7 @@ o processo de decisão — não apenas o resultado final.
 
 ## 🧭 Status atual
 
-**Fase 0 — Fundação** ✅ concluída · **Fase 1 — Entidades e Value Objects** 🚧 em andamento
+**Fase 0 — Fundação** ✅ concluída · **Fase 1 — Entidades e Value Objects** ✅ concluída · **Fase 2 — Banco de Dados e Repository Pattern** ✅ concluída · **Fase 3 — Application Layer** 🚧 em andamento
 
 ## 📝 Diário de desenvolvimento
 
@@ -96,9 +96,9 @@ src/
 | Fase | Conteúdo | Status |
 |---|---|---|
 | 0 | Fundação: Composer, PSR-4, Router próprio, conexão PDO | ✅ Concluída |
-| 1 | Domínio: Entidades e Value Objects | 🚧 Em andamento |
-| 2 | Banco de dados + Repository Pattern | 🔜 |
-| 3 | Application Layer: criação de pedido | 🔜 |
+| 1 | Domínio: Entidades e Value Objects | ✅ Concluída |
+| 2 | Banco de dados + Repository Pattern | ✅ Concluída |
+| 3 | Application Layer: criação de pedido | 🚧 Em andamento |
 | 4 | Regras de negócio: cupom e desconto (Strategy) | 🔜 |
 | 5 | Máquina de estado do pedido | 🔜 |
 | 6 | Camada HTTP completa | 🔜 |
