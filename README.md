@@ -7,20 +7,26 @@
 
 > Um sistema de pedidos para cardápio digital, construído do zero em **PHP puro**,
 > para demonstrar na prática Programação Orientada a Objetos, Clean Architecture,
-> SOLID e Design Patterns aplicados a um domínio de negócio real — não um CRUD
-> de exemplo.
+> SOLID e Design Patterns aplicados a um domínio de negócio real.
 
 ## 🎯 Sobre o projeto
+Este é um projeto de estudo desenvolvido com o propósito de colocar em prática conceitos de Programação Orientada a Objetos (POO), Clean Architecture, SOLID, Clean Code e Design Patterns.
+O projeto consiste em um cardápio digital com gerenciamento de pedidos, desenvolvido a partir de regras de negócio reais e com foco em uma arquitetura organizada, escalável e de fácil manutenção. Cada uma dessas regras é resolvida com um padrão de
+projeto **justificado**, nunca aplicado só para constar.
 
-Este não é "mais um CRUD para portfólio". O domínio de pedidos de um cardápio
-digital tem regras de negócio genuínas: um pedido não pode pular etapas de
-status, um cupom tem regras de validade e valor mínimo, o estabelecimento tem
-horário de funcionamento. Cada uma dessas regras é resolvida com um padrão de
-projeto **justificado** — nunca aplicado só para constar.
+O domínio possui diferentes regras de negócio, como:
+
+- Um pedido não pode avançar ou retroceder livremente entre os status;
+- Cupons possuem regras de validade e valor mínimo para utilização;
+- O estabelecimento possui horários de funcionamento;
+- Produtos podem possuir diferentes categorias e disponibilidades;
+- O fluxo de um pedido deve respeitar determinadas regras do domínio.
+
+O principal objetivo deste projeto não é apenas construir uma aplicação funcional, mas **entender como os conceitos de Engenharia de Software e Programação Orientada a Objetos podem ser aplicados na resolução de problemas reais**.
 
 O projeto é construído **em fases públicas**. Cada fase adiciona uma camada de
-responsabilidade ao sistema e é documentada aqui e em posts técnicos, expondo
-o processo de decisão — não apenas o resultado final.
+responsabilidade ao sistema e é documentada aqui, expondo
+o processo de decisão.
 
 📄 Documentação completa:
 [Arquitetura e Roadmap](docs/ARQUITETURA-E-ROADMAP.md) ·
@@ -43,7 +49,7 @@ o processo de decisão — não apenas o resultado final.
 | 2026-08 | Fase 0 | Estrutura do projeto, Composer/PSR-4, Router HTTP próprio, ConnectionFactory (PDO) |
 | 2026-08 | Docs | Requisitos funcionais/não-funcionais, casos de uso, diagrama ER |
 
-> Esta tabela é atualizada a cada fase concluída — é o histórico de evolução do projeto.
+> Esta tabela é atualizada a cada fase concluída, é o histórico de evolução do projeto.
 
 ---
 
@@ -56,7 +62,7 @@ Presentation (HTTP) → Application (Casos de Uso) → Domain (Regras de Negóci
 ```
 
 Regra de dependência: as camadas externas dependem das internas, nunca o
-contrário. O `Domain` não conhece PDO nem HTTP — apenas define interfaces
+contrário. O `Domain` não conhece PDO nem HTTP, apenas define interfaces
 (Inversão de Dependência).
 
 ## ⚙️ Stack
