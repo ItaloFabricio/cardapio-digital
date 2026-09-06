@@ -38,10 +38,6 @@ o processo de decisão.
 ## 🧭 Status atual
 
 **Fases 0, 1, 2 e 3** ✅ concluídas · **Fase 4 — Cupom e Desconto (Strategy Pattern)** 🔜 próxima
-**Fase 0 — Fundação** ✅ concluída · 
-**Fase 1 — Entidades e Value Objects** ✅ concluída · 
-**Fase 2 — Banco de Dados e Repository Pattern** ✅ concluída · 
-**Fase 3 — Application Layer** 🚧 em andamento
 
 ## 📝 Diário de desenvolvimento
 
