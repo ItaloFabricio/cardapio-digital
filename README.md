@@ -37,7 +37,7 @@ o processo de decisão.
 
 ## 🧭 Status atual
 
-**Fases 0, 1, 2, 3 e 4** ✅ concluídas · **Fase 5 — Máquina de estado do pedido** 🔜 próxima
+**Fases 0 a 3** ✅ concluídas · **Fase 4 — Cupom e desconto (Strategy)** 🔜 próxima
 
 ## 📝 Diário de desenvolvimento
 
@@ -48,6 +48,7 @@ o processo de decisão.
 | 1 | Value Object `Money` (imutável) e Entity `Product` (mutável), com exceções de domínio próprias |
 | 2 | `ProductRepositoryInterface`, migrations (`categories`, `products`), `PdoProductRepository` validado de ponta a ponta |
 | 3 | Value Object `OrderItem`, Entity `Order`, `CreateOrderService` (Application), `OrderRepositoryInterface` + `PdoOrderRepository` com transação, criação de pedido completa e persistida |
+| 4 | 🚧 **Strategy Pattern para descontos** (`DiscountStrategyInterface`, desconto percentual e fixo) · próximos: `Coupon`, regras de elegibilidade (Specification), `ApplyCouponService` |
 
 > Esta tabela é atualizada a cada fase concluída, é o histórico de evolução do projeto.
 
@@ -108,8 +109,8 @@ src/
 | 1 | Domínio: Entidades e Value Objects | ✅ Concluída |
 | 2 | Banco de dados + Repository Pattern | ✅ Concluída |
 | 3 | Application Layer: criação de pedido | ✅ Concluída |
-| 4 | Regras de negócio: cupom e desconto (Strategy) | ✅ Concluída |
-| 5 | Máquina de estado do pedido | 🚧 Em andamento |
+| 4 | Regras de negócio: cupom e desconto (Strategy) | 🚧 Em andamento |
+| 5 | Máquina de estado do pedido | 🔜 |
 | 6 | Camada HTTP completa | 🔜 |
 | 7 | Segurança | 🔜 |
 | 8 | Painel administrativo | 🔜 |
