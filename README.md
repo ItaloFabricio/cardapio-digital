@@ -37,7 +37,7 @@ o processo de decisão.
 
 ## 🧭 Status atual
 
-**Fases 0, 1, 2 e 3** ✅ concluídas · **Fase 4 — Cupom e Desconto (Strategy Pattern)** 🔜 próxima
+**Fases 0, 1, 2, 3 e 4** ✅ concluídas · **Fase 5 — Máquina de estado do pedido** 🔜 próxima
 
 ## 📝 Diário de desenvolvimento
 
@@ -108,8 +108,8 @@ src/
 | 1 | Domínio: Entidades e Value Objects | ✅ Concluída |
 | 2 | Banco de dados + Repository Pattern | ✅ Concluída |
 | 3 | Application Layer: criação de pedido | ✅ Concluída |
-| 4 | Regras de negócio: cupom e desconto (Strategy) | 🚧 Em andamento |
-| 5 | Máquina de estado do pedido | 🔜 |
+| 4 | Regras de negócio: cupom e desconto (Strategy) | ✅ Concluída |
+| 5 | Máquina de estado do pedido | 🚧 Em andamento |
 | 6 | Camada HTTP completa | 🔜 |
 | 7 | Segurança | 🔜 |
 | 8 | Painel administrativo | 🔜 |
