@@ -9,10 +9,6 @@ use App\Domain\Exception\InvalidCouponException;
 use App\Domain\ValueObject\Money;
 use DateTimeImmutable;
 
-/**
- * Coupon é uma Entity: cada cupom cadastrado é unico (tem id) e sera
- * gerenciado individualmente pelo administrador.
- */
 final class Coupon
 {
     private function __construct(
@@ -116,7 +112,7 @@ final class Coupon
         return $this->minimumOrderValue;
     }
 
-    private static function normalizeCode(string $code): string
+    public static function normalizeCode(string $code): string
     {
         return strtoupper(trim($code));
     }
