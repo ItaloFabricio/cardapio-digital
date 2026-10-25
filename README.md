@@ -48,7 +48,7 @@ o processo de decisão.
 | 1 | Value Object `Money` (imutável) e Entity `Product` (mutável), com exceções de domínio próprias |
 | 2 | `ProductRepositoryInterface`, migrations (`categories`, `products`), `PdoProductRepository` validado de ponta a ponta |
 | 3 | Value Object `OrderItem`, Entity `Order`, `CreateOrderService` (Application), `OrderRepositoryInterface` + `PdoOrderRepository` com transação, criação de pedido completa e persistida |
-| 4 | 🚧 **Strategy Pattern para descontos** (`DiscountStrategyInterface`, desconto percentual e fixo) · próximos: `Coupon`, regras de elegibilidade (Specification), `ApplyCouponService` |
+| 4 | **Cupons e descontos:** Strategy Pattern (desconto percentual e fixo), Enum `DiscountType`, Entity `Coupon`, Specifications de elegibilidade (validade e valor mínimo), `CouponRepositoryInterface` + migration + `PdoCouponRepository`, `DiscountStrategyFactory` e `ApplyCouponService` |
 
 > Esta tabela é atualizada a cada fase concluída, é o histórico de evolução do projeto.
 
@@ -84,6 +84,19 @@ cp .env.example .env
 php -S localhost:8000 -t public
 ```
 
+### Scripts de teste manual (`bin/`)
+
+Enquanto os testes automatizados (PHPUnit) não chegam na Fase 9, cada etapa tem um
+script que demonstra o comportamento no terminal:
+
+| Script | O que demonstra | Precisa de banco? |
+|---|---|---|
+| `test-product-repository.php` | Salvar e buscar um produto | Sim |
+| `test-coupon-specifications.php` | Regras de validade e valor mínimo do cupom | Não |
+| `test-discount-factory.php` | Escolha da estratégia de desconto e cálculo | Não |
+| `test-coupon-repository.php` | Salvar e buscar um cupom (busca sem diferenciar maiúsculas) | Sim |
+| `test-apply-coupon-service.php` | Aplicar cupom: 1 cenário de sucesso e 4 de recusa | Sim |
+
 Endpoints disponíveis nesta fase:
 
 | Método | Rota | Descrição |
@@ -95,10 +108,24 @@ Endpoints disponíveis nesta fase:
 
 ```
 src/
-├── Domain/          # Entidades, Value Objects, interfaces de repositório
-├── Application/     # Casos de uso, Services, DTOs, Strategies
-├── Infrastructure/  # PDO, Router HTTP, Migrations
-└── Presentation/     # Controllers, Requests, Responses
+├── Domain/
+│   ├── Entity/           # Product, Order, Coupon (identidade própria)
+│   ├── ValueObject/      # Money, OrderItem (imutáveis, sem identidade)
+│   ├── Enum/             # DiscountType
+│   ├── Specification/    # Regras de elegibilidade do cupom
+│   ├── Repository/       # Interfaces de persistência (contratos)
+│   └── Exception/        # Exceções de regras de negócio
+├── Application/
+│   ├── DTO/              # Objetos de entrada e saída dos casos de uso
+│   ├── Service/          # CreateOrderService, ApplyCouponService
+│   └── Strategy/         # Estratégias de desconto e a Factory que as escolhe
+├── Infrastructure/
+│   ├── Persistence/
+│   │   ├── Connection/   # ConnectionFactory (PDO)
+│   │   └── Pdo/          # Implementações concretas dos Repositories
+│   ├── Migration/        # Scripts .sql versionados
+│   └── Http/             # Router próprio
+└── Presentation/         # Controllers, Requests, Responses (Fase 6)
 ```
 
 ## 🗺️ Roadmap
@@ -109,8 +136,8 @@ src/
 | 1 | Domínio: Entidades e Value Objects | ✅ Concluída |
 | 2 | Banco de dados + Repository Pattern | ✅ Concluída |
 | 3 | Application Layer: criação de pedido | ✅ Concluída |
-| 4 | Regras de negócio: cupom e desconto (Strategy) | 🚧 Em andamento |
-| 5 | Máquina de estado do pedido | 🔜 |
+| 4 | Regras de negócio: cupom e desconto (Strategy) | ✅ Concluída |
+| 5 | Máquina de estado do pedido | 🚧 Em andamento |
 | 6 | Camada HTTP completa | 🔜 |
 | 7 | Segurança | 🔜 |
 | 8 | Painel administrativo | 🔜 |
