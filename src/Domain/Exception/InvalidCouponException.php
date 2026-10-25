@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Exception;
 
+use App\Domain\ValueObject\Money;
 use DomainException;
 
 /**
@@ -30,6 +31,25 @@ final class InvalidCouponException extends DomainException
         return new self(sprintf(
             'Este cupom já possui um id atribuído: %d.',
             $id,
+        ));
+    }
+
+    public static function notFound(string $code): self
+    {
+        return new self(sprintf('Cupom "%s" não encontrado.', $code));
+    }
+
+    public static function expired(string $code): self
+    {
+        return new self(sprintf('O cupom "%s" está expirado.', $code));
+    }
+
+    public static function minimumOrderNotReached(string $code, Money $minimum): self
+    {
+        return new self(sprintf(
+            'O cupom "%s" exige um pedido mínimo de %s.',
+            $code,
+            $minimum->format(),
         ));
     }
 }
