@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Enum\OrderStatus;
 use App\Domain\Exception\InvalidOrderException;
 use App\Domain\ValueObject\Money;
 use App\Domain\ValueObject\OrderItem;
 
+/**
+ * Order e uma Entity que reune varios OrderItem (Value Objects).
+ *
+ * O status e controlado por uma maquina de estados (OrderStatus): ele
+ * so muda atraves de changeStatus(), que recusa transicoes invalidas.
+ */
 final class Order
 {
-    private const STATUS_PENDING = 'pending';
-
     /**
      * @param list<OrderItem> $items
      */
@@ -19,7 +24,7 @@ final class Order
         private ?int $id,
         private readonly ?int $customerId,
         private array $items,
-        private string $status,
+        private OrderStatus $status,
     ) {
     }
 
@@ -29,7 +34,7 @@ final class Order
             id: null,
             customerId: $customerId,
             items: [],
-            status: self::STATUS_PENDING,
+            status: OrderStatus::Pending,
         );
     }
 
@@ -42,7 +47,7 @@ final class Order
         int $id,
         ?int $customerId,
         array $items,
-        string $status,
+        OrderStatus $status,
     ): self {
         return new self($id, $customerId, $items, $status);
     }
@@ -58,11 +63,24 @@ final class Order
 
     public function addItem(OrderItem $item): void
     {
-        if ($this->status !== self::STATUS_PENDING) {
+        if ($this->status !== OrderStatus::Pending) {
             throw InvalidOrderException::cannotModifyConfirmedOrder();
         }
 
         $this->items[] = $item;
+    }
+
+    public function changeStatus(OrderStatus $newStatus): void
+    {
+        if (!$this->status->canTransitionTo($newStatus)) {
+            throw InvalidOrderException::invalidStatusTransition($this->status, $newStatus);
+        }
+
+        if ($newStatus === OrderStatus::Confirmed && $this->items === []) {
+            throw InvalidOrderException::cannotConfirmEmptyOrder();
+        }
+
+        $this->status = $newStatus;
     }
 
     public function total(): Money
@@ -86,7 +104,7 @@ final class Order
         return $this->customerId;
     }
 
-    public function status(): string
+    public function status(): OrderStatus
     {
         return $this->status;
     }

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Exception;
 
+use App\Domain\Enum\OrderStatus;
 use DomainException;
 
+/**
+ * Violacoes de regras de negocio especificas da entidade Order.
+ */
 final class InvalidOrderException extends DomainException
 {
     public static function idAlreadyAssigned(int $id): self
@@ -30,7 +34,7 @@ final class InvalidOrderException extends DomainException
             $productId,
         ));
     }
- 
+
     public static function productUnavailable(int $productId, string $productName): self
     {
         return new self(sprintf(
@@ -38,5 +42,19 @@ final class InvalidOrderException extends DomainException
             $productName,
             $productId,
         ));
+    }
+
+    public static function invalidStatusTransition(OrderStatus $from, OrderStatus $to): self
+    {
+        return new self(sprintf(
+            'Não é possível mudar o pedido de "%s" para "%s".',
+            $from->value,
+            $to->value,
+        ));
+    }
+
+    public static function cannotConfirmEmptyOrder(): self
+    {
+        return new self('Não é possível confirmar um pedido sem itens.');
     }
 }

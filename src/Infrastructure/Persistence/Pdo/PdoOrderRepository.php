@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence\Pdo;
 
 use App\Domain\Entity\Order;
+use App\Domain\Enum\OrderStatus;
 use App\Domain\Repository\OrderRepositoryInterface;
 use App\Domain\ValueObject\Money;
 use App\Domain\ValueObject\OrderItem;
@@ -25,6 +26,8 @@ final class PdoOrderRepository implements OrderRepositoryInterface
         try {
             if ($order->id() === null) {
                 $this->insertOrder($order);
+            } else {
+                $this->updateStatus($order);
             }
 
             $this->replaceItems($order);
@@ -54,7 +57,7 @@ final class PdoOrderRepository implements OrderRepositoryInterface
             id: (int) $row['id'],
             customerId: $row['customer_id'] !== null ? (int) $row['customer_id'] : null,
             items: $this->findItemsByOrderId((int) $row['id']),
-            status: (string) $row['status'],
+            status: OrderStatus::from((string) $row['status']),
         );
     }
 
@@ -66,10 +69,22 @@ final class PdoOrderRepository implements OrderRepositoryInterface
 
         $statement->execute([
             'customer_id' => $order->customerId(),
-            'status' => $order->status(),
+            'status' => $order->status()->value,
         ]);
 
         $order->assignId((int) $this->connection->lastInsertId());
+    }
+
+    private function updateStatus(Order $order): void
+    {
+        $statement = $this->connection->prepare(
+            'UPDATE orders SET status = :status WHERE id = :id',
+        );
+
+        $statement->execute([
+            'status' => $order->status()->value,
+            'id' => $order->id(),
+        ]);
     }
 
     private function replaceItems(Order $order): void
