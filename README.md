@@ -37,7 +37,7 @@ o processo de decisão.
 
 ## 🧭 Status atual
 
-**Fases 0 a 3** ✅ concluídas · **Fase 4 — Cupom e desconto (Strategy)** 🔜 próxima
+**Fases 0 a 5** ✅ concluídas · **Fase 6 — Camada HTTP** 🔜 próxima
 
 ## 📝 Diário de desenvolvimento
 
@@ -49,6 +49,7 @@ o processo de decisão.
 | 2 | `ProductRepositoryInterface`, migrations (`categories`, `products`), `PdoProductRepository` validado de ponta a ponta |
 | 3 | Value Object `OrderItem`, Entity `Order`, `CreateOrderService` (Application), `OrderRepositoryInterface` + `PdoOrderRepository` com transação, criação de pedido completa e persistida |
 | 4 | **Cupons e descontos:** Strategy Pattern (desconto percentual e fixo), Enum `DiscountType`, Entity `Coupon`, Specifications de elegibilidade (validade e valor mínimo), `CouponRepositoryInterface` + migration + `PdoCouponRepository`, `DiscountStrategyFactory` e `ApplyCouponService` |
+| 5 | **Máquina de estado do pedido:** Enum `OrderStatus` com tabela de transições, `Order::changeStatus()` (com regra de pedido vazio), persistência do status no `PdoOrderRepository` e `ChangeOrderStatusService` |
 
 > Esta tabela é atualizada a cada fase concluída, é o histórico de evolução do projeto.
 
@@ -79,9 +80,14 @@ contrário. O `Domain` não conhece PDO nem HTTP, apenas define interfaces
 ```bash
 composer install
 cp .env.example .env
-# ajuste as credenciais do banco no .env
+# ajuste as credenciais do banco no .env (DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD)
 
-php -S localhost:8000 -t public
+# crie o banco "cardapio_digital" no seu MySQL antes de continuar
+
+php bin/test-connection.php          # confirma que a conexão com o banco funciona
+php bin/migrate.php                  # cria as tabelas
+
+php -S localhost:8000 -t public      # sobe o servidor HTTP
 ```
 
 ### Scripts de teste manual (`bin/`)
@@ -96,6 +102,12 @@ script que demonstra o comportamento no terminal:
 | `test-discount-factory.php` | Escolha da estratégia de desconto e cálculo | Não |
 | `test-coupon-repository.php` | Salvar e buscar um cupom (busca sem diferenciar maiúsculas) | Sim |
 | `test-apply-coupon-service.php` | Aplicar cupom: 1 cenário de sucesso e 4 de recusa | Sim |
+| `test-order-status.php` | Mapa de transições de status e verificações | Não |
+| `test-order-status-flow.php` | Mudar o status de um pedido, gravar e reler do banco | Sim |
+| `test-change-order-status-service.php` | Mudar status pelo Service: avanços válidos, recusas e pedido inexistente | Sim |
+
+> Para rodar os scripts que precisam de produto cadastrado, execute antes
+> `php bin/test-product-repository.php`.
 
 Endpoints disponíveis nesta fase:
 
@@ -136,9 +148,9 @@ src/
 | 1 | Domínio: Entidades e Value Objects | ✅ Concluída |
 | 2 | Banco de dados + Repository Pattern | ✅ Concluída |
 | 3 | Application Layer: criação de pedido | ✅ Concluída |
-| 4 | Regras de negócio: cupom e desconto (Strategy) | ✅ Concluída |
-| 5 | Máquina de estado do pedido | 🚧 Em andamento |
-| 6 | Camada HTTP completa | 🔜 |
+| 4 | Regras de negócio: cupom e desconto (Strategy, Specification, Factory) | ✅ Concluída |
+| 5 | Máquina de estado do pedido (Enum + transições + Service) | ✅ Concluída |
+| 6 | Camada HTTP completa | 🔜 Próxima |
 | 7 | Segurança | 🔜 |
 | 8 | Painel administrativo | 🔜 |
 | 9 | Testes automatizados (PHPUnit) | 🔜 |
