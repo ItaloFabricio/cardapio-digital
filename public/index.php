@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Infrastructure\Http\RouteNotFoundException;
 use App\Infrastructure\Http\Router;
+use App\Presentation\Request\HttpRequest;
+use App\Presentation\Request\InvalidRequestBodyException;
 use App\Presentation\Response\HttpStatus;
 use App\Presentation\Response\JsonResponse;
 use App\Presentation\Response\ResponseEmitter;
@@ -30,14 +32,15 @@ $router->get('/health', static fn (): JsonResponse => JsonResponse::ok([
 ]));
 
 try {
-    $response = $router->dispatch(
-        method: $_SERVER['REQUEST_METHOD'],
-        uri: $_SERVER['REQUEST_URI'],
-    );
+    $request = HttpRequest::fromGlobals();
+
+    $response = $router->dispatch($request->method(), $request->path());
 
     if (!$response instanceof JsonResponse) {
         throw new LogicException('Todo handler de rota deve retornar um JsonResponse.');
     }
+} catch (InvalidRequestBodyException $exception) {
+    $response = JsonResponse::error(HttpStatus::BadRequest, $exception->getMessage());
 } catch (RouteNotFoundException) {
     $response = JsonResponse::error(HttpStatus::NotFound, 'Recurso não encontrado.');
 } catch (Throwable $exception) {
