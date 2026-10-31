@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Infrastructure\Config\EnvironmentLoader;
 use App\Infrastructure\Config\TimezoneConfigurator;
+use App\Infrastructure\Container\ServiceContainer;
 use App\Infrastructure\Http\Router;
 use App\Presentation\ApiRoutes;
 use App\Presentation\HttpKernel;
@@ -19,7 +20,7 @@ try {
     (new TimezoneConfigurator())->configure($_ENV['APP_TIMEZONE'] ?? 'America/Sao_Paulo');
 
     $router = new Router();
-    (new ApiRoutes())->register($router);
+    (new ApiRoutes(new ServiceContainer()))->register($router);
 
     // 2. Atender o cliente: texto cru entra, resposta sai.
     $response = (new HttpKernel($router))->handle(
