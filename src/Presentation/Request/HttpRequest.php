@@ -21,15 +21,6 @@ final class HttpRequest
     ) {
     }
 
-    public static function fromGlobals(): self
-    {
-        return self::fromRaw(
-            $_SERVER['REQUEST_METHOD'],
-            $_SERVER['REQUEST_URI'],
-            (string) file_get_contents('php://input'),
-        );
-    }
-
     public static function fromRaw(string $method, string $uri, string $rawBody): self
     {
         return new self(
