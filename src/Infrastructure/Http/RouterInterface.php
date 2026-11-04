@@ -6,11 +6,6 @@ namespace App\Infrastructure\Http;
 
 /**
  * Contrato do roteador HTTP.
- *
- * DIP em acao: o front controller (public/index.php) vai depender desta
- * interface, nao da classe concreta Router. Isso significa que, no futuro,
- * se voce decidir trocar por nikic/fast-route, basta criar uma nova classe
- * que implemente RouterInterface - nada no resto do sistema muda.
  */
 interface RouterInterface
 {
@@ -20,6 +15,9 @@ interface RouterInterface
 
     /**
      * Resolve a rota atual e executa o handler correspondente.
+     *
+     * @param array<mixed> $extraArguments repassados ao handler ANTES dos
+     *                                     parametros extraidos da URL
      */
-    public function dispatch(string $method, string $uri): mixed;
+    public function dispatch(string $method, string $uri, array $extraArguments = []): mixed;
 }

@@ -4,19 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http;
 
-/**
- * Router HTTP minimalista, construido para fins de estudo.
- *
- * Conceitos de POO demonstrados aqui:
- * - Encapsulamento: a lista de rotas ($routes) e privada; ninguem de fora
- *   manipula o array diretamente, so atraves de get()/post().
- * - Composicao: o Router "tem" uma colecao de Route (composicao, nao heranca -
- *   nao faz sentido Router "ser um tipo de" Route).
- * - match(): usado no lugar de uma cadeia de if/elseif para comparar o
- *   metodo HTTP, deixando o codigo mais declarativo.
- *
- * Suporta parametros dinamicos no formato /produtos/{id}.
- */
 final class Router implements RouterInterface
 {
     /** @var list<Route> */
@@ -37,7 +24,7 @@ final class Router implements RouterInterface
         $this->routes[] = new Route($method, $path, $handler);
     }
 
-    public function dispatch(string $method, string $uri): mixed
+    public function dispatch(string $method, string $uri, array $extraArguments = []): mixed
     {
         $path = $this->normalizePath($uri);
 
@@ -49,7 +36,7 @@ final class Router implements RouterInterface
             $params = $route->matchPath($path);
 
             if ($params !== null) {
-                return ($route->handler)(...$params);
+                return ($route->handler)(...$extraArguments, ...$params);
             }
         }
 
