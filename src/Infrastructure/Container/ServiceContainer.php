@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Container;
 
+use App\Application\Service\CreateOrderService;
 use App\Application\Service\ListAvailableProductsService;
+use App\Domain\Repository\OrderRepositoryInterface;
 use App\Domain\Repository\ProductRepositoryInterface;
 use App\Infrastructure\Persistence\Connection\ConnectionFactory;
+use App\Infrastructure\Persistence\Pdo\PdoOrderRepository;
 use App\Infrastructure\Persistence\Pdo\PdoProductRepository;
+use App\Presentation\Controller\OrderController;
 use App\Presentation\Controller\ProductController;
 use PDO;
 
@@ -28,13 +32,31 @@ final class ServiceContainer
         return new PdoProductRepository($this->pdo());
     }
 
+    public function orderRepository(): OrderRepositoryInterface
+    {
+        return new PdoOrderRepository($this->pdo());
+    }
+
     public function listAvailableProductsService(): ListAvailableProductsService
     {
         return new ListAvailableProductsService($this->productRepository());
     }
 
+    public function createOrderService(): CreateOrderService
+    {
+        return new CreateOrderService(
+            $this->productRepository(),
+            $this->orderRepository(),
+        );
+    }
+
     public function productController(): ProductController
     {
         return new ProductController($this->listAvailableProductsService());
+    }
+
+    public function orderController(): OrderController
+    {
+        return new OrderController($this->createOrderService());
     }
 }
