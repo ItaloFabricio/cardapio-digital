@@ -6,6 +6,7 @@ namespace App\Presentation;
 
 use App\Infrastructure\Container\ServiceContainer;
 use App\Infrastructure\Http\RouterInterface;
+use App\Presentation\Request\HttpRequest;
 use App\Presentation\Response\JsonResponse;
 
 /**
@@ -32,6 +33,11 @@ final class ApiRoutes
         $router->get(
             '/products',
             fn (): JsonResponse => $this->container->productController()->listAvailable(),
+        );
+
+        $router->post(
+            '/orders',
+            fn (HttpRequest $request): JsonResponse => $this->container->orderController()->create($request),
         );
     }
 }
