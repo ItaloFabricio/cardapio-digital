@@ -39,6 +39,19 @@ final class JsonResponse
         return new self($status, ['error' => $message]);
     }
 
+    /**
+     * Resposta 422 com a lista de campos invalidos (campo => mensagem).
+     *
+     * @param array<string, string> $errors
+     */
+    public static function validationFailed(string $message, array $errors): self
+    {
+        return new self(HttpStatus::UnprocessableEntity, [
+            'error' => $message,
+            'details' => $errors,
+        ]);
+    }
+
     public function status(): HttpStatus
     {
         return $this->status;
