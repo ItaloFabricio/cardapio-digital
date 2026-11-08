@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace App\Presentation;
 
-use App\Infrastructure\Http\RouteNotFoundException;
 use App\Infrastructure\Http\RouterInterface;
 use App\Presentation\Request\HttpRequest;
-use App\Presentation\Request\InvalidRequestBodyException;
-use App\Presentation\Request\ValidationException;
-use App\Presentation\Response\HttpStatus;
 use App\Presentation\Response\JsonResponse;
-use DomainException;
 use LogicException;
 use Throwable;
 
@@ -23,6 +18,7 @@ final class HttpKernel
 {
     public function __construct(
         private readonly RouterInterface $router,
+        private readonly ExceptionHandler $exceptionHandler,
     ) {
     }
 
@@ -42,21 +38,8 @@ final class HttpKernel
             }
 
             return $response;
-        } catch (InvalidRequestBodyException $exception) {
-            return JsonResponse::error(HttpStatus::BadRequest, $exception->getMessage());
-        } catch (ValidationException $exception) {
-            return JsonResponse::validationFailed($exception->getMessage(), $exception->errors());
-        } catch (RouteNotFoundException) {
-            return JsonResponse::error(HttpStatus::NotFound, 'Recurso não encontrado.');
-        } catch (DomainException $exception) {
-            // Violacao de regra de negocio. As mensagens das excecoes de
-            // dominio sao escritas por nos e seguras para exibir.
-            return JsonResponse::error(HttpStatus::UnprocessableEntity, $exception->getMessage());
         } catch (Throwable $exception) {
-            // O detalhe tecnico vai para o log interno, nunca para o cliente.
-            error_log((string) $exception);
-
-            return JsonResponse::error(HttpStatus::InternalServerError, 'Erro interno do servidor.');
+            return $this->exceptionHandler->handle($exception);
         }
     }
 }

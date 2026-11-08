@@ -5,6 +5,7 @@ declare(strict_types=1);
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 use App\Infrastructure\Http\Router;
+use App\Presentation\ExceptionHandler;
 use App\Presentation\HttpKernel;
 use App\Presentation\Response\JsonResponse;
 
@@ -17,7 +18,7 @@ $router->get('/boom', static function (): JsonResponse {
     throw new RuntimeException('detalhe interno secreto');
 });
 
-$kernel = new HttpKernel($router);
+$kernel = new HttpKernel($router, new ExceptionHandler());
 
 $requests = [
     ['GET /ok', 'GET', '/ok', ''],

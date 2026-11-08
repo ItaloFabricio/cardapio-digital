@@ -12,6 +12,7 @@ use App\Domain\Repository\ProductRepositoryInterface;
 use App\Domain\ValueObject\Money;
 use App\Infrastructure\Http\Router;
 use App\Presentation\Controller\OrderController;
+use App\Presentation\ExceptionHandler;
 use App\Presentation\HttpKernel;
 use App\Presentation\Request\HttpRequest;
 use App\Presentation\Response\JsonResponse;
@@ -76,7 +77,7 @@ $router->post(
     static fn (HttpRequest $request): JsonResponse => $controller->create($request),
 );
 
-$kernel = new HttpKernel($router);
+$kernel = new HttpKernel($router, new ExceptionHandler());
 
 $scenarios = [
     'Pedido válido com dois produtos' => '{"items":[{"productId":1,"quantity":2},{"productId":2,"quantity":1}]}',
