@@ -7,7 +7,6 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 use App\Application\Service\ChangeOrderStatusService;
 use App\Domain\Entity\Order;
 use App\Domain\Enum\OrderStatus;
-use App\Domain\Exception\InvalidOrderException;
 use App\Domain\ValueObject\OrderItem;
 use App\Infrastructure\Persistence\Connection\ConnectionFactory;
 use App\Infrastructure\Persistence\Pdo\PdoOrderRepository;
@@ -68,7 +67,7 @@ foreach ($scenarios as [$label, $orderId, $newStatus]) {
         $updated = $service->execute($orderId, $newStatus);
 
         echo "   APLICADO  -> status agora: {$updated->status()->value}\n";
-    } catch (InvalidOrderException $exception) {
+    } catch (DomainException $exception) {
         echo '   RECUSADO  -> ' . $exception->getMessage() . "\n";
     }
 }

@@ -6,12 +6,11 @@ namespace App\Application\Service;
 
 use App\Domain\Entity\Order;
 use App\Domain\Enum\OrderStatus;
-use App\Domain\Exception\InvalidOrderException;
+use App\Domain\Exception\OrderNotFoundException;
 use App\Domain\Repository\OrderRepositoryInterface;
 
 /**
  * Caso de uso: "mudar o status de um pedido".
- * Service apenas busca o pedido, pede a mudanca e grava o resultado.
  */
 final class ChangeOrderStatusService
 {
@@ -36,7 +35,7 @@ final class ChangeOrderStatusService
         $order = $this->orderRepository->findById($orderId);
 
         if ($order === null) {
-            throw InvalidOrderException::orderNotFound($orderId);
+            throw OrderNotFoundException::withId($orderId);
         }
 
         return $order;

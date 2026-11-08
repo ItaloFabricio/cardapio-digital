@@ -57,12 +57,4 @@ final class InvalidOrderException extends DomainException
     {
         return new self('Não é possível confirmar um pedido sem itens.');
     }
-
-    public static function orderNotFound(int $orderId): self
-    {
-        return new self(sprintf(
-            'Pedido com id %d não foi encontrado.',
-            $orderId,
-        ));
-    }
 }
