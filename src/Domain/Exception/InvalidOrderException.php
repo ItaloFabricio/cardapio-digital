@@ -48,8 +48,8 @@ final class InvalidOrderException extends DomainException
     {
         return new self(sprintf(
             'Não é possível mudar o pedido de "%s" para "%s".',
-            $from->value,
-            $to->value,
+            $from->label(),
+            $to->label(),
         ));
     }
 
