@@ -11,6 +11,10 @@ use App\Presentation\Response\JsonResponse;
 
 /**
  * Lista de todas as rotas da API.
+ *
+ * Cada rota pede ao container o Controller de que precisa somente
+ * quando e chamada (dentro da funcao), entao nada e criado antes da hora.
+ * O Router entrega a requisicao como primeiro argumento do handler.
  */
 final class ApiRoutes
 {
@@ -38,6 +42,11 @@ final class ApiRoutes
         $router->post(
             '/orders',
             fn (HttpRequest $request): JsonResponse => $this->container->orderController()->create($request),
+        );
+
+        $router->post(
+            '/coupons/simulate',
+            fn (HttpRequest $request): JsonResponse => $this->container->couponController()->simulate($request),
         );
     }
 }
